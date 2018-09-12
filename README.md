@@ -5,6 +5,12 @@ The node is the basic component of Nile, it is composed by:
 * Actions: all the services that the node hosts. These actions are called directly be the clients through a WebSocket connection
 * Components: the views that the clients load and use to call the actions. 
 
+## Configuration
+Install the nodejs dependencies
+```
+npm install
+```
+
 ## Running
 ```
 npm start
