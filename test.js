@@ -45,8 +45,8 @@ function registerNode(node) {
 	// You call the register method and listen for the registered event, remember to save the token properties!
 
 	node.register();
-	node.on("registered", () => {
-		console.log("Registered!")
+	node.on("registered", (data) => {
+		console.log("Registered with token: " + data.token)
 		console.log("Loggin in...")
 		node.token // You password to login as your node
 		node.login();
