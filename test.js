@@ -2,7 +2,14 @@ const Node = require("./node")
 const io = require('socket.io-client');
 const socket = io('http://localhost:3334');
 const IPFS = require('ipfs')
-const ipfs = new IPFS({ repo: 'node1' })
+const ipfs = new IPFS({
+	repo: 'node1' ,
+	config: {
+		Addresses: {
+			Swarm: ['/ip4/0.0.0.0/tcp/0'],
+		},
+	}
+})
 
 /**
  * Registering a new node
