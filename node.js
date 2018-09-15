@@ -30,7 +30,7 @@ class Node extends EventEmitter {
 			} break;
 			case 'logged': {
 				this.logged(request.parameters)
-			}
+			} break;
 			case 'loginFailed': {
 				this.loginFailed()
 			}
