@@ -44,6 +44,7 @@ class Node extends EventEmitter {
 		})
 	}
 	async logged(parameters) {
+		this.queue = parameters.queue
 		this.hash = parameters.hash
 		let properties_file = ''
 		this.ipfs.files.get(this.hash, (err, files) => {
@@ -52,10 +53,32 @@ class Node extends EventEmitter {
 			this.information = properties.information
 			this.components = properties.components
 			this.actions = properties.actions
+			this.queue.forEach(v => {
+				let content = v.content
+				let recipient, action
+				if(v.ws_id) {
+					recipient = v.ws_id
+					action = "forward"
+				} else {
+					recipient = v.sender
+					action = "queue"
+				}
+				let f_string = this.actions[content.action]
+				let f = new Function("parameters", "reply", f_string)
+				f(content.parameters, (response) => {
+					this.ws.emit("node.to.instance", {
+						action: action,
+						recipient: recipient,
+						parameters: response,
+						queue_id: v.queue_id,
+						token: this.token
+					})
+				})
+			})
 			this.emit("logged", {
 				information: this.information,
 				components: this.components,
-				actions: this.actions,
+				actions: this.actions
 			})
 		})
 	}
