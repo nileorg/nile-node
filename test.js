@@ -87,6 +87,7 @@ function loginNode(node) {
 			function2: "console.log('function2')",
 		}
 	})
+	node.on("loginFailed", () => console.log("Login failed!"))
 }
 
 socket.on('connect', () => {

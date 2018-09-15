@@ -24,14 +24,15 @@ class Node extends EventEmitter {
 		});
 	}
 	processInstanceRequest(request) {
-		if (request.server) {
-			switch (request.action) {
-				case 'registered': {
-					this.registered(request.parameters)
-				} break;
-				case 'logged': {
-					this.logged(request.parameters)
-				}
+		switch (request.action) {
+			case 'registered': {
+				this.registered(request.parameters)
+			} break;
+			case 'logged': {
+				this.logged(request.parameters)
+			}
+			case 'loginFailed': {
+				this.loginFailed()
 			}
 		}
 	}
@@ -81,6 +82,9 @@ class Node extends EventEmitter {
 				actions: this.actions
 			})
 		})
+	}
+	async loginFailed() {
+		this.emit("loginFailed")
 	}
 	async register() {
 		this.ipfs.files.add(Buffer.from(JSON.stringify({
