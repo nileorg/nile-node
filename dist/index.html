@@ -29,7 +29,7 @@
 				<div v-if="!logged" class="col-md-3 offset-md-1 text-center">
 					<div class="form-group">
 						<div v-if="login_error !== ''">{{login_error}}<br></div>
-						<label for="token">Token (WpeqG)</label>
+						<label for="token">Token</label>
 						<input v-model="token" type="text" class="form-control" id="token" placeholder="Token">
 					</div>
 					<button @click="login" type="submit" class="btn btn-primary">LOGIN</button>
