@@ -15,11 +15,20 @@ class Node extends EventEmitter {
 		let f_string = this.actions[request.content.action]
 		let f = new Function("parameters", "reply", f_string)
 		const sender = request.sender
+		const request_id = "request_" + Date.now()
+		this.emit("requestReceived", {
+			request_id: request_id,
+			content: request
+		})
 		f(request.content.parameters, (response) => {
 			this.ws.emit("node.to.instance", {
 				action: "forward",
 				recipient: sender,
 				parameters: response
+			})
+			this.emit("requestReplied", {
+				request_id: request_id,
+				content: request
 			})
 		});
 	}
@@ -66,6 +75,14 @@ class Node extends EventEmitter {
 				}
 				let f_string = this.actions[content.action]
 				let f = new Function("parameters", "reply", f_string)
+				const request_id = "request_" + Date.now()
+				console.log(content)
+				this.emit("requestReceived", {
+					request_id: request_id,
+					content: {
+						content: content
+					}
+				})
 				f(content.parameters, (response) => {
 					this.ws.emit("node.to.instance", {
 						action: action,
@@ -73,6 +90,12 @@ class Node extends EventEmitter {
 						parameters: response,
 						queue_id: v.queue_id,
 						token: this.token
+					})
+					this.emit("requestReplied", {
+						request_id: request_id,
+						content: {
+							content: content
+						}
 					})
 				})
 			})

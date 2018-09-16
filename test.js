@@ -1,4 +1,4 @@
-const Node = require("./node")
+const Node = require("./src/node")
 const io = require('socket.io-client');
 const socket = io('http://localhost:3334');
 const IPFS = require('ipfs')
@@ -22,18 +22,18 @@ function registerNode(node) {
 	}
 	node.components = [
 		{
-			type: "button",
-			action: "function1",
-			parameters: ['inp1'],
-			label: "Call function1"
+			"type": "button",
+			"action": "function1",
+			"parameters": ["inp1"],
+			"label": "Call function1"
 		},
 		{
-			type: "text",
-			key: "inp1"
+			"type": "text",
+			"key": "inp1"
 		},
 		{
-			type: "output",
-			key: "out1"
+			"type": "output",
+			"key": "out1"
 		}
 	]
 	node.actions = {
