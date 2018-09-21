@@ -73,6 +73,7 @@ function loginNode(node) {
 	node.login();
 	node.on("logged", info => {
 		console.log("Logged!")
+		node.information.name = "Name Updated!"
 		node.actions = {
 			function1: "return (" + String(()=>{
 				let uppercase = ""
@@ -86,6 +87,9 @@ function loginNode(node) {
 			}) + ")()",
 			function2: "console.log('function2')",
 		}
+		console.log("Updating...")
+		node.update()
+		node.on("updated", ()=>console.log("Node updated!"))
 	})
 	node.on("loginFailed", () => console.log("Login failed!"))
 }

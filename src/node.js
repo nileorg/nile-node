@@ -37,6 +37,9 @@ class Node extends EventEmitter {
 			case 'registered': {
 				this.registered(request.parameters)
 			} break;
+			case 'updated': {
+				this.updated(request.parameters)
+			} break;
 			case 'logged': {
 				this.logged(request.parameters)
 			} break;
@@ -130,6 +133,26 @@ class Node extends EventEmitter {
 		this.emit("registered", {
 			token: this.token
 		})
+	}
+	async update() {
+		this.ipfs.files.add(Buffer.from(JSON.stringify({
+			information: this.information,
+			components: this.components,
+			actions: this.actions,
+		})), (err, files) => {
+			this.hash = files[0].hash
+			this.ws.emit("node.to.instance", {
+				action: "update",
+				parameters: {
+					token: this.token,
+					hash: this.hash,
+					information: this.information
+				}
+			})
+		})
+	}
+	async updated(parameters) {
+		this.emit("updated")
 	}
 }
 
