@@ -1,0 +1,44 @@
+{
+  "name": "node-lib-js",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./src/module.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "standard && mocha --recursive",
+    "lint": "standard --fix",
+    "migrate": "db-migrate",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nileorg/node-lib-js.git"
+  },
+  "author": "Marco Castignoli",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nileorg/node-lib-js/issues"
+  },
+  "homepage": "https://github.com/nileorg/node-lib-js#readme",
+  "dependencies": {
+    "http": "0.0.0",
+    "httpdispatcher": "^2.1.2",
+    "ipfs": "^0.33.1",
+    "node-fetch": "^2.3.0",
+    "randomstring": "^1.1.5",
+    "rxjs": "^6.3.3",
+    "socket.io": "^2.1.1",
+    "sqlite3": "^4.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "db-migrate": "^0.11.4",
+    "db-migrate-sqlite3": "^0.3.1",
+    "mocha": "^5.2.0",
+    "socket.io-client": "^2.1.1",
+    "standard": "*",
+    "touch": "^3.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="/bundle.js"></script>
+    <script>
+        const socket = io.connect('http://173.18.0.24:3001/')
+        let ipfsNode = new Ipfs({
+            silent: true,
+            repo: 'node',
+            config: {
+                Addresses: {
+                    Swarm: ['/ip4/0.0.0.0/tcp/0']
+                }
+            }
+        })
+        let ddbms = {}
+        const ipfsddbms = new NileNode.Ddbms.Ipfs(ipfsNode)
+        ddbms[ipfsddbms.ID] = ipfsddbms
+        let node = new NileNode.Node('ws', {
+          'ws': new NileNode.Protocols.WebSocketsClient(socket)
+        }, null, ddbms)
+
+        node.on('logged', ({ success, id, components, queue }) => {
+            if(success) {
+                console.log(id, components, queue)
+            }
+        })
+
+        node.on('registerRequestReceived', ({ id, token }) => {
+            node.login({ token })
+        })
+
+        socket.on('connect', () => {
+        ipfsNode.on('ready', () => {
+            node.register({
+                components: [
+                    {
+                    'type': 'button',
+                    'action': 'function1',
+                    'parameters': ['inp1'],
+                    'label': 'Call function1'
+                    },
+                    {
+                    'type': 'text',
+                    'key': 'inp1'
+                    },
+                    {
+                    'type': 'output',
+                    'key': 'out1'
+                    }
+                ],
+                information: { name: "prova" }
+                })
+            })
+        })
+
+        node.loadListeners()
+    </script>
+</body>
+</html>
