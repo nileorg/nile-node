@@ -2,9 +2,6 @@ const WebSocketsClient = require('./protocols/WebSocketsClient')
 
 const Node = require('./Node')
 
-const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database(':memory:')
-
 // Initialize an websocket server
 const io = require('socket.io-client')
 const socket = io.connect('http://173.18.0.24:3001/')
@@ -52,7 +49,7 @@ socket.on('connect', () => {
           'key': 'out1'
         }
       ],
-      information: { name: "prova" }
+      information: { name: 'prova' }
     })
   })
 })
